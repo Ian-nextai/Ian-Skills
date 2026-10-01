@@ -5,6 +5,7 @@
 #### Ian 的 Skill 集合，自己在用的都开源在这里
 
 [![AgentSkills](https://img.shields.io/badge/AgentSkills-Standard-8B5CF6?style=flat-square)](https://agentskills.io)
+[![Skills](https://img.shields.io/badge/Skills-2-10B981?style=flat-square)](#-skills)
 ![Codex](https://img.shields.io/badge/Codex-Skill-10B981?style=flat-square&logo=openai&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-3B82F6?style=flat-square)
 
@@ -14,12 +15,21 @@
 
 ---
 
+## 📋 目录
+
+| Skill | 一句话 |
+|---|---|
+| 📦 [**amz-excess-inventory-check**](#-amz-excess-inventory-checkfba-冗余库存检查) | FBA 库存健康度体检，冗余库存与库龄风险一次看清 |
+| 🔧 [**amz-automotive-parts-fitment2keyword**](#-amz-automotive-parts-fitment2keyword汽车配件关键词组合生成器) | 汽车适配表展开成电商关键词矩阵 |
+
+---
+
 ## 📦 安装方式
 
-在 Codex 等支持 Agent Skills 的工具里，直接说：
+在 Codex 等支持 Agent Skills 的工具里，直接说（把 `<skill-name>` 换成目录名，比如 `amz-excess-inventory-check`）：
 
 ```
-帮我安装这个 skill：https://github.com/Ian-nextai/Ian-Skills/tree/main/amz-excess-inventory-check
+帮我安装这个 skill：https://github.com/Ian-nextai/Ian-Skills/tree/main/<skill-name>
 ```
 
 你的 Agent 不支持 Skill 也没关系：把对应目录的 `SKILL.md` 全文下载下来，当成项目规则文件（或直接贴进对话）让 Agent 照着执行。
@@ -37,7 +47,7 @@
 
 分析 Amazon FBA 库存健康度，识别冗余库存与库龄风险，导出固定结构的 Excel 工作簿（分析总览 / 冗余库存 / 库存全量 / 数据检查）。
 
-**三种数据来源**
+**数据来源**
 
 | Mode | 来源 | 费用列 |
 |---|---|---|
@@ -56,14 +66,10 @@
 | 🔵 P2 中 | 30 天零销，或冗余量 ≥ 可售量的 50% |
 | 🟢 P3 低 | 其余 Amazon 判定为冗余的库存 |
 
-两条容易踩的口径：
+**容易踩的口径**
 
 - 超龄附加费是**历史证据**，单凭它不构成 P0。
 - 月度仓储费与超龄附加费的**期间往往不同**，不要相加当成"本月费用"。
-
-**输出**
-
-文件按数据快照日期命名：`amazon_fba_inventory_check_<YYYYMMDD>.xlsx`。日期取报表里的 `snapshot-date`，不是运行当天。
 
 > ⚠️ 脚本依赖 Codex 内置的 `@oai/artifact-tool`。非 Codex 环境下不用装它，让 Agent 换个表格库重写导出、或直接只交付分析结论即可；判定规则和四个 sheet 的结构不变，排版细节可省。
 
@@ -78,7 +84,7 @@
 
 把汽车适配表（Year / Make / Model / Cyl / Engine）展开成电商关键词矩阵，导出 3 个 sheet 的 Excel：关键词组合结果 / 测试摘要 / 原始适配数据。
 
-**三种数据来源**
+**数据来源**
 
 | 来源 | 做法 |
 |---|---|
@@ -99,7 +105,7 @@
 含连字符的行（`F-150`、`15400-PLM-A02`）自动追加**去连字符变体**，淡黄底色标出。
 清单永远问脚本，不要背：`python scripts/build_combinations.py --list-sections`
 
-**三条容易踩的口径**
+**容易踩的口径**
 
 - `L4` 和 `I4` 在无衬线字体里是**同一个竖条**。读错不会报错，只会让所有含 `Cyl` 的区块措词全歪。
 - `Cyl` 和 `Engine` 是两列，不能合并：`5.7L V8 HEMI` 要拆成 `Cyl=V8` + `Engine=5.7L`。
