@@ -1,0 +1,71 @@
+{
+  "fba": {
+    "label": "FBA Inventory",
+    "aliases": {
+      "snapshot-date": ["snapshot_date", "snapshot date", "库存快照日期"],
+      "sku": ["merchant-sku", "merchant_sku", "msku", "seller-sku"],
+      "fnsku": ["fn-sku", "fulfillment-network-sku"],
+      "asin": ["ASIN"],
+      "product-name": ["product_name", "商品名称", "标题"],
+      "condition": ["item-condition", "成色"],
+      "available": ["sellable-quantity", "sellable quantity", "可售数量"],
+      "marketplace": ["country", "country_code", "site", "站点"],
+      "Total Reserved Quantity": ["total-reserved-quantity", "reserved-quantity", "预留数量"],
+      "unfulfillable-quantity": ["unfulfillable_quantity", "不可售数量"],
+      "Inventory Supply at FBA": ["inventory-supply-at-fba", "fba-total-inventory", "FBA总库存"],
+      "units-shipped-t30": ["units_shipped_t30", "units shipped last 30 days", "sales-shipped-last-30-days", "近30天销量"],
+      "units-shipped-t60": ["units_shipped_t60", "units shipped last 60 days", "sales-shipped-last-60-days", "近60天销量"],
+      "alert": ["inventory-alert", "库存提醒"],
+      "sell-through": ["sell_through", "售罄率"],
+      "days-of-supply": ["days_of_supply", "可售天数"],
+      "estimated-excess-quantity": ["estimated_excess_quantity", "estimated excess quantity", "预计冗余数量"],
+      "inv-age-0-to-90-days": ["inv_age_0_to_90_days", "库龄0-90天"],
+      "inv-age-91-to-180-days": ["inv_age_91_to_180_days", "库龄91-180天"],
+      "inv-age-181-to-270-days": ["inv_age_181_to_270_days", "库龄181-270天"],
+      "inv-age-271-to-365-days": ["inv_age_271_to_365_days", "库龄271-365天"],
+      "inv-age-366-to-455-days": ["inv_age_366_to_455_days", "库龄366天以上"],
+      "inv-age-456-plus-days": ["inv_age_456_plus_days", "inv-age-456-plus", "库龄456天以上"],
+      "inbound-quantity": ["inbound_quantity", "在途数量"],
+      "inbound-working": ["inbound_working"],
+      "inbound-shipped": ["inbound_shipped"],
+      "inbound-received": ["inbound_received"],
+      "recommended-action": ["recommended_action", "建议动作"],
+      "Recommended ship-in quantity": ["recommended-ship-in-quantity"],
+      "Recommended ship-in date": ["recommended-ship-in-date"],
+      "Total Days of Supply (including units from open shipments)": [
+        "total-days-of-supply-including-units-from-open-shipments",
+        "含在途可售天数"
+      ],
+      "Reserved FC Processing": ["reserved-fc-processing"],
+      "Reserved Customer Order": ["reserved-customer-order"],
+      "currency": ["币种"]
+    }
+  },
+  "storage": {
+    "label": "Monthly Storage Fees",
+    "aliases": {
+      "country": ["country_code", "Country", "marketplace", "站点"],
+      "fnsku": ["FNSKU", "fn-sku"],
+      "fulfillment_center": ["fulfillment-center", "运营中心"],
+      "month_of_charge": ["month-of-charge", "计费月份"],
+      "est_base_msf": ["estimated-base-monthly-storage-fee", "基础仓储费"],
+      "est_sus": ["estimated-storage-utilization-surcharge", "仓储利用率附加费"],
+      "estimated_monthly_storage_fee": ["estimated-monthly-storage-fee", "月度仓储费"],
+      "average_quantity_on_hand": ["average-quantity-on-hand", "平均在库数量"],
+      "currency": ["币种"]
+    }
+  },
+  "aged": {
+    "label": "Aged Inventory Surcharge",
+    "aliases": {
+      "snapshot-date": ["snapshot_date", "快照日期"],
+      "sku": ["merchant-sku", "merchant_sku", "MSKU"],
+      "fnsku": ["FNSKU", "fn-sku"],
+      "country": ["country_code", "Country", "marketplace", "站点"],
+      "qty-charged": ["quantity-charged", "计费数量"],
+      "amount-charged": ["amount_charged", "附加费"],
+      "surcharge-age-tier": ["surcharge_age_tier", "age-tier", "库龄区间"],
+      "currency": ["币种"]
+    }
+  }
+}
