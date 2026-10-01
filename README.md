@@ -14,28 +14,6 @@
 
 ---
 
-## ⚠️ 运行环境
-
-**这些 Skill 是在 Codex 里开发并日常使用的，按 Codex 的环境假设编写。**
-
-`AMZ-Excess-Inventory-Check` 的分析脚本 `scripts/analyze_inventory.mjs` 依赖 Codex 运行时内置的 `@oai/artifact-tool`（用来生成 Excel 工作簿），以及两个环境变量：
-
-| 变量 | 用途 |
-|---|---|
-| `$CODEX_PRIMARY_RUNTIME_NODE` | Node 可执行文件路径 |
-| `$CODEX_PRIMARY_RUNTIME_NODE_MODULES` | 预置依赖目录，脚本通过软链使用它 |
-
-**在 Codex 之外（Claude Code、Cursor 等其他 Agent）脚本不会直接跑通**——不是 Skill 标准不兼容，只是缺这个包和这些变量。这种情况下**不用去装它**，让执行任务的 Agent 自己换一套方案就行，规则部分完全不受影响：
-
-1. 照 `SKILL.md` 的工作流与判定规则，用当前环境能装上的表格库重写导出（Python 的 `openpyxl`、Node 的 `exceljs` / `xlsx` 都可以）；
-2. 或者干脆不写 xlsx——先只产出分析与结论，导出格式由你或 Agent 另行决定。
-
-两条底线不能变：**四个 sheet 的顺序与字段**（照 [references/output-schema.md](./AMZ-Excess-Inventory-Check/references/output-schema.md) 对齐），以及**冗余优先级判定规则**。至于表格配色、列宽、冻结窗格这些排版细节，属于 Codex 那套运行时的呈现效果，换环境后做不到也没关系，不影响结论。
-
-预览图（PNG）依赖 `@oai/artifact-tool` 的渲染能力，换环境后同样没有。按 `SKILL.md` 的约定，预览只是导出后的目视检查，不是产出工作簿的前提，跳过即可。
-
----
-
 ## 📦 安装方式
 
 在 Codex 等支持 Agent Skills 的工具里，直接说：
@@ -86,6 +64,8 @@
 **输出**
 
 文件按数据快照日期命名：`amazon_fba_inventory_check_<YYYYMMDD>.xlsx`。日期取报表里的 `snapshot-date`，不是运行当天。
+
+> ⚠️ 脚本依赖 Codex 内置的 `@oai/artifact-tool`。非 Codex 环境下不用装它，让 Agent 换个表格库重写导出、或直接只交付分析结论即可；判定规则和四个 sheet 的结构不变，排版细节可省。
 
 → [SKILL.md](./AMZ-Excess-Inventory-Check/SKILL.md) · [字段定义](./AMZ-Excess-Inventory-Check/references/output-schema.md)
 
