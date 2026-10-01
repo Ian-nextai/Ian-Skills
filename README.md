@@ -19,7 +19,7 @@
 在 Codex 等支持 Agent Skills 的工具里，直接说：
 
 ```
-帮我安装这个 skill：https://github.com/Ian-nextai/Ian-Skills/tree/main/AMZ-Excess-Inventory-Check
+帮我安装这个 skill：https://github.com/Ian-nextai/Ian-Skills/tree/main/amz-excess-inventory-check
 ```
 
 你的 Agent 不支持 Skill 也没关系：把对应目录的 `SKILL.md` 全文下载下来，当成项目规则文件（或直接贴进对话）让 Agent 照着执行。
@@ -31,7 +31,7 @@
 <table>
 <tr><td>
 
-### 📦 AMZ-Excess-Inventory-Check（FBA 冗余库存检查）
+### 📦 amz-excess-inventory-check（FBA 冗余库存检查）
 
 > *"亚马逊判定冗余、销量、库龄、仓储费，四张表一次看清该清哪些货。"*
 
@@ -67,7 +67,7 @@
 
 > ⚠️ 脚本依赖 Codex 内置的 `@oai/artifact-tool`。非 Codex 环境下不用装它，让 Agent 换个表格库重写导出、或直接只交付分析结论即可；判定规则和四个 sheet 的结构不变，排版细节可省。
 
-→ [SKILL.md](./AMZ-Excess-Inventory-Check/SKILL.md) · [字段定义](./AMZ-Excess-Inventory-Check/references/output-schema.md)
+→ [SKILL.md](./amz-excess-inventory-check/SKILL.md) · [字段定义](./amz-excess-inventory-check/references/output-schema.md)
 
 </td></tr>
 <tr><td>
