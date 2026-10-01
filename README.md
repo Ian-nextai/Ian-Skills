@@ -70,6 +70,46 @@
 → [SKILL.md](./AMZ-Excess-Inventory-Check/SKILL.md) · [字段定义](./AMZ-Excess-Inventory-Check/references/output-schema.md)
 
 </td></tr>
+<tr><td>
+
+### 🔧 amz-automotive-parts-fitment2keyword（汽车配件关键词组合生成器）
+
+> *"把适配表展开成关键词矩阵，39 个区块一次出全。"*
+
+把汽车适配表（Year / Make / Model / Cyl / Engine）展开成电商关键词矩阵，导出 3 个 sheet 的 Excel：关键词组合结果 / 测试摘要 / 原始适配数据。
+
+**三种数据来源**
+
+| 来源 | 做法 |
+|---|---|
+| Excel / CSV / TSV | `scripts/read_fitment.py` 自动映射中英文表头，并清洗排量列 |
+| 图片截图 | Agent 用视觉读表，只取五列 |
+| 粘贴的文本 / 聊天里的表格 | 直接解析成五列 |
+
+**区块数是算出来的，不是手写的**
+
+维度 5 个，区块数 = `n + 2^n - 1 + 3`：
+
+| 维度 n | 区块数 |
+|---|---|
+| 4（适配表没有缸型列） | 4 + 15 + 3 = **22** |
+| 5（含 `Cyl` 缸型） | 5 + 31 + 3 = **39** |
+
+每个区块同时出**普通版**和 **+号限定符版**（`2021 Hyundai Santa Fe L4 2.5L sensor` ↔ `+2021 +Hyundai +Santa Fe +L4 +2.5L +sensor`）。
+含连字符的行（`F-150`、`15400-PLM-A02`）自动追加**去连字符变体**，淡黄底色标出。
+清单永远问脚本，不要背：`python scripts/build_combinations.py --list-sections`
+
+**三条容易踩的口径**
+
+- `L4` 和 `I4` 在无衬线字体里是**同一个竖条**。读错不会报错，只会让所有含 `Cyl` 的区块措词全歪。
+- `Cyl` 和 `Engine` 是两列，不能合并：`5.7L V8 HEMI` 要拆成 `Cyl=V8` + `Engine=5.7L`。
+- `Cyl` 整列恒定（比如全是 `L4`）时，含它的区块只是把现有组合各复制一份，没有区分度 —— 真有多缸型混排时才有意义。
+
+> ⚠️ 需要 Python 3.9+。脚本用 PEP 723 声明了 `openpyxl`，`uv run` 会自动装；直接 `python` 执行需先 `pip install openpyxl`。
+
+→ [SKILL.md](./amz-automotive-parts-fitment2keyword/SKILL.md) · [输出格式规格](./amz-automotive-parts-fitment2keyword/references/output-format.md) · [提取规则](./amz-automotive-parts-fitment2keyword/references/extraction.md)
+
+</td></tr>
 </table>
 
 ---

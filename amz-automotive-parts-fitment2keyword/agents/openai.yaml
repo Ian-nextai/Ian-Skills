@@ -1,0 +1,4 @@
+interface:
+  display_name: "汽车配件关键词组合生成器"
+  short_description: "把汽车适配表展开成 39 个区块的关键词矩阵并导出 Excel"
+  default_prompt: "使用 $amz-automotive-parts-fitment2keyword 从汽车适配数据生成关键词组合 Excel；先提取 Year/Make/Model/Cyl/Engine 五列，再追问词根关键词、OE 号和故障语义。"
