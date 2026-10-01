@@ -1,0 +1,4 @@
+interface:
+  display_name: "Amazon FBA 冗余库存检查"
+  short_description: "支持 Amazon CSV、Amazon MCP 和领星 MCP 的冗余库存分析"
+  default_prompt: "使用 $AMZ-Excess-Inventory-Check 分析 Amazon FBA 库存来源并导出冗余库存 Excel 工作簿；领星 MCP 模式下月度仓储费和超龄附加费留空。"

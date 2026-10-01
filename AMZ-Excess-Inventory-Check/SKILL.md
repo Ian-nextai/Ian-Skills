@@ -1,5 +1,5 @@
 ---
-name: Amz-Excess-Inventory-Check
+name: AMZ-Excess-Inventory-Check
 description: Analyze Amazon FBA inventory from Amazon CSV reports, the existing Amazon MCP report gateway, or a local LingXing MCP gateway, then export a fixed-schema Excel workbook for excess inventory and aging stock. Use for recurring Amazon inventory health, excess-stock, and carrying-cost analysis.
 ---
 
