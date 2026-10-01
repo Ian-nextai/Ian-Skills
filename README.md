@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧰 Ian Skills
+# 🛠 Ian Skills
 
 #### Ian 的 Skill 集合，自己在用的都开源在这里
 
@@ -18,19 +18,21 @@
 
 **这些 Skill 是在 Codex 里开发并日常使用的，按 Codex 的环境假设编写。**
 
-具体到 `Amz-Excess-Inventory-Check`：它的分析脚本 `scripts/analyze_inventory.mjs` 依赖 Codex 运行时提供的 `@oai/artifact-tool`（用于生成 Excel 工作簿）以及两个环境变量：
+`Amz-Excess-Inventory-Check` 的分析脚本 `scripts/analyze_inventory.mjs` 依赖 Codex 运行时内置的 `@oai/artifact-tool`（用来生成 Excel 工作簿），以及两个环境变量：
 
 | 变量 | 用途 |
 |---|---|
 | `$CODEX_PRIMARY_RUNTIME_NODE` | Node 可执行文件路径 |
 | `$CODEX_PRIMARY_RUNTIME_NODE_MODULES` | 预置依赖目录，脚本通过软链使用它 |
 
-**在 Codex 之外（Claude Code、Cursor 等其他 Agent）**，脚本无法直接跑——不是标准不兼容，是缺这个包和这些变量。`SKILL.md` 里的工作流、判定规则、字段定义与数据源要求仍然完全有效，你可以：
+**在 Codex 之外（Claude Code、Cursor 等其他 Agent）脚本不会直接跑通**——不是 Skill 标准不兼容，只是缺这个包和这些变量。这种情况下**不用去装它**，让执行任务的 Agent 自己换一套方案就行，规则部分完全不受影响：
 
-1. 让 Agent 照着 `SKILL.md` 的规则，用当前环境能用的表格库（Python 的 `openpyxl`、Node 的 `exceljs` 等）重新实现导出；
-2. 或把 `SKILL.md` + `references/output-schema.md` 当规则文件喂给 Agent，让它产出同样四张表的结构。
+1. 照 `SKILL.md` 的工作流与判定规则，用当前环境能装上的表格库重写导出（Python 的 `openpyxl`、Node 的 `exceljs` / `xlsx` 都可以）；
+2. 或者干脆不写 xlsx——先只产出分析与结论，导出格式由你或 Agent 另行决定。
 
-固定 schema 见 [references/output-schema.md](./Amz-Excess-Inventory-Check/references/output-schema.md)，换实现时照它对齐即可，不会因为换了库就跑偏。
+两条底线不能变：**四个 sheet 的顺序与字段**（照 [references/output-schema.md](./Amz-Excess-Inventory-Check/references/output-schema.md) 对齐），以及**冗余优先级判定规则**。至于表格配色、列宽、冻结窗格这些排版细节，属于 Codex 那套运行时的呈现效果，换环境后做不到也没关系，不影响结论。
+
+预览图（PNG）依赖 `@oai/artifact-tool` 的渲染能力，换环境后同样没有。按 `SKILL.md` 的约定，预览只是导出后的目视检查，不是产出工作簿的前提，跳过即可。
 
 ---
 

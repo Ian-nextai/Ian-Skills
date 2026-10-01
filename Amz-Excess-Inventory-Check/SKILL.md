@@ -61,6 +61,39 @@ preview folders): append the snapshot date rather than reusing a fixed name.
 
 ## Execution
 
+### If you are not running in Codex
+
+The bundled `scripts/analyze_inventory.mjs` targets Codex's built-in
+`@oai/artifact-tool`. Outside Codex that package (and
+`$CODEX_PRIMARY_RUNTIME_NODE` / `_NODE_MODULES`) does not exist, so the script
+will not run. **Do not try to install or shim it — pick another way to produce
+the deliverable.** The analysis rules are what matter; the workbook library is
+an implementation detail.
+
+Fallback options, in order of preference:
+
+1. Re-implement the export with whatever spreadsheet library the current
+   environment can install (Python `openpyxl`, Node `exceljs` / `xlsx`, …),
+   following the workflow and decision rules above.
+2. If no spreadsheet library is available, deliver the analysis itself (the
+   priorities, counts, and fee reconciliation) and say plainly that the `.xlsx`
+   could not be produced in this environment.
+
+Either way, these are non-negotiable:
+
+- The four sheets, in order: `分析总览`, `冗余库存`, `库存全量`, `数据检查`.
+- The field order and names in
+  [references/output-schema.md](references/output-schema.md), including which
+  columns are dropped per mode.
+- The excess-priority decision rules.
+- The dated file name (see [File naming](#file-naming)).
+
+Cosmetics — the navy header fill, column widths, freeze panes, banded table
+style, P0-P3 conditional fills, PNG previews — are conveniences of the Codex
+runtime. Dropping them outside Codex is fine and does not affect the result.
+
+### Codex runtime
+
 Use the spreadsheet runtime. Immediately before the first workbook creation command in the turn, run the required spreadsheet artifact-operation marker once.
 
 Create a conversation-specific temporary directory, copy `scripts/analyze_inventory.mjs` into it, and create a `node_modules` symlink to `$CODEX_PRIMARY_RUNTIME_NODE_MODULES`. Run the copied script with `$CODEX_PRIMARY_RUNTIME_NODE`:
