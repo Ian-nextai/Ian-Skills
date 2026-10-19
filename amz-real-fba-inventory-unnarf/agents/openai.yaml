@@ -1,0 +1,4 @@
+interface:
+  display_name: "AMZ 真实 FBA 库存（非远程配送）"
+  short_description: "按站点拆分排除 NARF 的真实本地 FBA 库存并导出 Excel"
+  default_prompt: "使用 $amz-real-fba-inventory-unnarf 通过 Inventory Ledger 的 Location 字段，按站点导出真实本地 FBA 库存；不要使用 FBA Inventory API 的可售数量。"

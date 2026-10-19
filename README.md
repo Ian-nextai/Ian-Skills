@@ -5,7 +5,7 @@
 #### Ian 的 Skill 集合，自己在用的都开源在这里
 
 [![AgentSkills](https://img.shields.io/badge/AgentSkills-Standard-8B5CF6?style=flat-square)](https://agentskills.io)
-[![Skills](https://img.shields.io/badge/Skills-2-10B981?style=flat-square)](#-skills)
+[![Skills](https://img.shields.io/badge/Skills-3-10B981?style=flat-square)](#-skills)
 ![Codex](https://img.shields.io/badge/Codex-Skill-10B981?style=flat-square&logo=openai&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-3B82F6?style=flat-square)
 
@@ -20,6 +20,7 @@
 | Skill | 一句话 |
 |---|---|
 | 📦 [**amz-excess-inventory-check**](#-amz-excess-inventory-checkfba-冗余库存检查) | FBA 库存健康度体检，冗余库存与库龄风险一次看清 |
+| 🗂 [**amz-real-fba-inventory-unnarf**](#-amz-real-fba-inventory-unnarf真实-fba-库存--排除远程配送) | 按站点导出排除 NARF 的真实本地仓 FBA 库存 |
 | 🔧 [**amz-automotive-parts-fitment2keyword**](#-amz-automotive-parts-fitment2keyword汽车配件关键词组合生成器) | 汽车适配表展开成电商关键词矩阵 |
 
 ---
@@ -74,6 +75,40 @@
 > ⚠️ 脚本依赖 Codex 内置的 `@oai/artifact-tool`。非 Codex 环境下不用装它，让 Agent 换个表格库重写导出、或直接只交付分析结论即可；判定规则和四个 sheet 的结构不变，排版细节可省。
 
 → [SKILL.md](./amz-excess-inventory-check/SKILL.md) · [字段定义](./amz-excess-inventory-check/references/output-schema.md)
+
+</td></tr>
+<tr><td>
+
+### 🗂 amz-real-fba-inventory-unnarf（真实 FBA 库存 · 排除远程配送）
+
+> *"CA/MX 的可售数字里混着美国仓的 NARF 库存，这里只算真正放在本地仓的货。"*
+
+按站点导出**物理存放在各国 FBA 仓**的库存，Excel 含 `汇总` + 每个站点一个明细 sheet + `数据检查`。
+
+**为什么不能直接用 FBA Inventory API**
+
+`amazon_sp_get_inventory` 和 All Inventory 报告给的是“可发往该站点”的口径，NARF 远程配送会把美国仓库存计入加拿大/墨西哥的可售数量。实测中多个 SKU 的 CA 站可售数量与美国站完全一致 —— 这些不是加拿大本地库存。
+
+本 skill 改用 Inventory Ledger Summary，按 `Location` 列（FC 所在国家）过滤，只保留物理在站点所在国的结存。
+
+**数据来源**
+
+| 步骤 | 工具 |
+|---|---|
+| 站点列表 | `amazon_sp_list_marketplaces`（排除 Non-Amazon / Shadow） |
+| 报告选择 | `amazon_sp_list_reports` 取每站点最新可用 Ledger 报告 |
+| 库存明细 | `amazon_sp_get_report_document` 读 `GET_LEDGER_SUMMARY_VIEW_DATA` |
+| Excel 导出 | `scripts/build_workbook.py`（openpyxl） |
+
+**容易踩的口径**
+
+- `Location = US` 的库存永远不计入 CA/MX/BR，否则又会把 NARF 共享库存算进来。
+- 单次文档读取上限 1000 行；Ledger 行按日期倒序，最新日期分组通常完整，脚本会校验并在截断风险时标红。
+- Ledger 有 2–7 天延迟，是快照不是实时库存；某个站点没有对应 Location 行表示本地仓无货，不是报表缺失。
+
+> ⚠️ 需要 Node 18+ 与 Python 3.9+（openpyxl）。脚本带 PEP 723 头，`uv run scripts/build_workbook.py` 会自动装依赖。
+
+→ [SKILL.md](./amz-real-fba-inventory-unnarf/SKILL.md) · [输出结构](./amz-real-fba-inventory-unnarf/references/output-schema.md)
 
 </td></tr>
 <tr><td>

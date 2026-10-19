@@ -1,0 +1,4 @@
+outputs/
+*.xlsx
+node_modules/
+__pycache__/
