@@ -85,6 +85,8 @@ uv run scripts/build_workbook.py --input ... --output ...
 2. 每个站点一个 sheet：`美国 US`、`加拿大 CA`、`墨西哥 MX`、`巴西 BR`（按实际参与站点生成）；
 3. `数据检查` — 报告范围、行数、截断与日期完整性、Location 汇总、警告。
 
+`数据检查` 只展示生成时间、快照日期和数据来源；**不写入**网关地址、账户名称、Seller ID、区域等敏感信息。
+
 站点 sheet 列：
 
 ```

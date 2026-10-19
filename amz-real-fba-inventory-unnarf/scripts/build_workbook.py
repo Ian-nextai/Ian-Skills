@@ -334,13 +334,8 @@ def build_checks(ws, payload: dict) -> None:
     ws["A1"].font = TITLE_FONT
     ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=ncols)
 
-    account = payload.get("account") or {}
     rows = [
         ("生成时间", payload.get("generatedAt", "-")),
-        ("网关", payload.get("gatewayUrl", "-")),
-        ("账户", account.get("name", "-")),
-        ("Seller ID", account.get("sellerId", "-")),
-        ("区域", account.get("region", "-")),
         ("快照日期", payload.get("snapshotDate", "-")),
         ("数据来源", payload.get("method", {}).get("source", "-")),
     ]

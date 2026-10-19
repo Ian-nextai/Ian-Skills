@@ -104,7 +104,7 @@
 
 ### 数据检查
 
-- Account and gateway identity (no token);
+- Generation time, snapshot date and data source only. Gateway endpoint, account name, seller ID and region are intentionally **not** written to the workbook;
 - One row per ledger report: id, range, total rows, rows read, truncated, date ordering verified, latest date, latest-date row count, latest-date completeness;
 - `Location` totals at the latest date, plus any Location not mapped to a requested marketplace;
 - Per-site reconciliation: ASIN count, total units, note;
