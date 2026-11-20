@@ -5,7 +5,7 @@
 #### Ian 的 Skill 集合，自己在用的都开源在这里
 
 [![AgentSkills](https://img.shields.io/badge/AgentSkills-Standard-8B5CF6?style=flat-square)](https://agentskills.io)
-[![Skills](https://img.shields.io/badge/Skills-3-10B981?style=flat-square)](#-skills)
+[![Skills](https://img.shields.io/badge/Skills-4-10B981?style=flat-square)](#-skills)
 ![Codex](https://img.shields.io/badge/Codex-Skill-10B981?style=flat-square&logo=openai&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-3B82F6?style=flat-square)
 
@@ -22,6 +22,7 @@
 | 📦 [**amz-excess-inventory-check**](#-amz-excess-inventory-checkfba-冗余库存检查) | FBA 库存健康度体检，冗余库存与库龄风险一次看清 |
 | 🗂 [**amz-real-fba-inventory-unnarf**](#-amz-real-fba-inventory-unnarf真实-fba-库存--排除远程配送) | 按站点导出排除 NARF 的真实本地仓 FBA 库存 |
 | 🔧 [**amz-automotive-parts-fitment2keyword**](#-amz-automotive-parts-fitment2keyword汽车配件关键词组合生成器) | 汽车适配表展开成电商关键词矩阵 |
+| 🔍 [**ian-search**](#-ian-search批量信息检索与补全) | 批量网页检索、供应商/展会信息清洗与单表补全 |
 
 ---
 
@@ -149,6 +150,38 @@
 > ⚠️ 需要 Python 3.9+。脚本用 PEP 723 声明了 `openpyxl`，`uv run` 会自动装；直接 `python` 执行需先 `pip install openpyxl`。
 
 → [SKILL.md](./amz-automotive-parts-fitment2keyword/SKILL.md) · [输出格式规格](./amz-automotive-parts-fitment2keyword/references/output-format.md) · [提取规则](./amz-automotive-parts-fitment2keyword/references/extraction.md)
+
+</td></tr>
+<tr><td>
+
+### 🔍 ian-search（批量信息检索与补全）
+
+> *"一份不完整清单，补成每行有值、每值有来源的单 Sheet 总表。"*
+
+面向公司 / 供应商 / 参展商 / 商品清单的信息补全工作流：先合并内部数据与官方 API，再用官网和网页检索补缺口，最后过滤噪音、标注来源并产出 Excel。
+
+**优先级**
+
+| 级别 | 来源 |
+| --- | --- |
+| 1 | 用户提供的内部数据 |
+| 2 | 官方活动 / 官方目录 / 官方 API |
+| 3 | 企业官网（产品页、导航、meta、正文） |
+| 4 | 网页检索结果 |
+| 5 | 名称 / 分类 / 上下文推断（必须标注） |
+
+内置脚本覆盖名称归一化、产品词提取、逐行回填和单 Sheet Excel 导出；联网部分调用环境里的 `web-access` skill，不内置任何账号或 API Key。
+
+**适用场景**
+
+- 批量查供应商 / 参展商 / 商品资料
+- “爬展会官网并和已有表匹配”“没数据的去网上查”
+- 给每条记录保留最终值、来源和证据链接
+- 输出一个 Sheet，空白单元格表示源数据没有该项
+
+> ⚠️ 已做脱敏：公开示例只使用占位公司名、保留域名和本地端口占位符。不要在实际使用脚本时把 API Key、Cookie、手机号或客户数据写回仓库。
+
+→ [SKILL.md](./ian-search/SKILL.md) · [来源优先级](./ian-search/references/merge-priority.md) · [搜索源手册](./ian-search/references/sources.md)
 
 </td></tr>
 </table>
